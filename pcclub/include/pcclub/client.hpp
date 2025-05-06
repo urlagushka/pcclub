@@ -5,10 +5,10 @@
 #include <optional>
 #include <string>
 
+#include <pcclub/time.hpp>
+
 namespace pc
 {
-  using time_stamp = std::chrono::hh_mm_ss< std::chrono::hours::rep >;
-
   struct client
   {
     std::string name;
