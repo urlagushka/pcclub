@@ -24,8 +24,7 @@ pc::event_1(club & ft_club, const uts & ts, const std::string & name, std::size_
 {
   client ft_client = {
     name,
-    ts,
-    std::nullopt
+    {ts, std::nullopt}
   };
 
   try
@@ -45,8 +44,7 @@ pc::event_2(club & ft_club, const uts & ts, const std::string & name, std::size_
 {
   client ft_client = {
     name,
-    std::nullopt,
-    std::nullopt
+    {std::nullopt, std::nullopt}
   };
 
   try
@@ -66,8 +64,7 @@ pc::event_3(club & ft_club, const uts & ts, const std::string & name, std::size_
 {
   client ft_client = {
     name,
-    std::nullopt,
-    std::nullopt
+    {std::nullopt, std::nullopt}
   };
   /*
   try
@@ -95,8 +92,7 @@ pc::event_4(club & ft_club, const uts & ts, const std::string & name, std::size_
 {
   client ft_client = {
     name,
-    std::nullopt,
-    ts
+    {std::nullopt, ts}
   };
 
   /*

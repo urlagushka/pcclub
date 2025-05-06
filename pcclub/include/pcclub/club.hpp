@@ -14,10 +14,10 @@ namespace pc
   {
     public:
       club() = delete;
-      club(time_stamp open, time_stamp close, std::size_t price);
+      club(time_stamp open, time_stamp close, std::size_t price, std::size_t table);
 
-      void add_client(client rhs);
-      void pop_client(client rhs);
+      void add_client(const client & rhs);
+      void pop_client(const client & rhs);
 
       void take_table(const client & rhs, std::size_t table);
       void free_table(std::size_t table);
@@ -26,15 +26,18 @@ namespace pc
       std::size_t client_size() const;
 
       bool is_open(const time_stamp & rhs) const;
+      bool is_client_inside(const client & rhs) const;
 
     private:
-      std::vector< client > __client;
-      std::unordered_map< std::size_t, std::optional< client > > __table;
+      std::unordered_map< std::string, client_time > __client;
+      std::vector< std::optional< client > > __table;
 
       time_stamp __open;
       time_stamp __close;
 
       std::size_t __price;
+
+      void verify_client(const client & rhs);
   };
 }
 

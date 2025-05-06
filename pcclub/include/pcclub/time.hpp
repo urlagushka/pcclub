@@ -12,6 +12,15 @@ namespace pc
   {
     std::chrono::hours hours;
     std::chrono::minutes minutes;
+
+    std::chrono::minutes to_minutes() const;
+
+    bool operator==(const time_stamp & rhs) const;
+    bool operator!=(const time_stamp & rhs) const;
+    bool operator<(const time_stamp & rhs) const;
+    bool operator>(const time_stamp & rhs) const;
+    bool operator<=(const time_stamp & rhs) const;
+    bool operator>=(const time_stamp & rhs) const;
   };
 
   std::istream & operator>>(std::istream & in, time_stamp & ts);

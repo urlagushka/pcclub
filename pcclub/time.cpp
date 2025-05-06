@@ -6,14 +6,63 @@
 #include <sstream>
 #include <iomanip>
 
+std::chrono::minutes
+pc::time_stamp::to_minutes() const
+{
+  return hours + minutes;
+}
+
+bool
+pc::time_stamp::operator==(const time_stamp & rhs) const
+{
+  return to_minutes() == rhs.to_minutes();
+}
+
+bool
+pc::time_stamp::operator!=(const time_stamp & rhs) const
+{
+  return !(*this == rhs);
+}
+
+bool
+pc::time_stamp::operator<(const time_stamp & rhs) const
+{
+  return to_minutes() < rhs.to_minutes();
+}
+
+bool
+pc::time_stamp::operator>(const time_stamp & rhs) const
+{
+  return rhs < *this;
+}
+
+bool
+pc::time_stamp::operator<=(const time_stamp & rhs) const
+{
+  return !(rhs < *this);
+}
+
+bool
+pc::time_stamp::operator>=(const time_stamp & rhs) const
+{
+  return !(*this < rhs);
+}
+
 std::istream &
 pc::operator>>(std::istream & in, time_stamp & ts)
 {
   std::string tmp;
   in >> tmp;
 
-  ts.hours = std::chrono::hours(std::stoi(tmp.substr(0, 2)));
-  ts.minutes = std::chrono::minutes(std::stoi(tmp.substr(3, 5)));
+  try
+  {
+    ts.hours = std::chrono::hours(std::stoi(tmp.substr(0, 2)));
+    ts.minutes = std::chrono::minutes(std::stoi(tmp.substr(3, 5)));
+  }
+  catch (const std::invalid_argument &)
+  {
+    in.setstate(std::ios_base::failbit);
+  }
 
   return in;
 }

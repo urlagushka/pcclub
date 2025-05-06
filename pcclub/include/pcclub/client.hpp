@@ -9,12 +9,16 @@
 
 namespace pc
 {
+  struct client_time
+  {
+    std::optional< time_stamp > in_time;
+    std::optional< time_stamp > out_time;
+  };
+
   struct client
   {
     std::string name;
-
-    std::optional< time_stamp > in_time;
-    std::optional< time_stamp > out_time;
+    client_time time;
   };
 }
 

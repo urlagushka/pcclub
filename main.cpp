@@ -28,7 +28,8 @@ int main(int argc, char ** argv)
     return 1;
   }
 
-  pc::club club(open, close, price);
+  std::cout << std::format("{}\n", open);
+  pc::club club(open, close, price, table);
   while (in)
   {
     pc::time_stamp time{};
@@ -44,18 +45,18 @@ int main(int argc, char ** argv)
 
     if (!in)
     {
-      std::cerr << "input error! (process stage)\n";
-      return 1;
+      break;
     }
 
     while (event_id != 0)
     {
+      std::cout << std::format("{} {} {}\n", time, event_id, str_data);
       auto event_out = event_call(event_id, club, time, str_data, sub_data);
       str_data = event_out.first;
       event_id = event_out.second;
     }
-    std::cout << std::format("{} {} {}\n", time, event_id, str_data);
   }
+  std::cout << std::format("{}\n", close);
 
   return 0;
 }
