@@ -6,6 +6,7 @@ add_library(pcclub
   club.cpp
   time.cpp
   events.cpp
+  utils.cpp
 )
 
 target_include_directories(pcclub PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

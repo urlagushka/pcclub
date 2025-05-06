@@ -44,7 +44,7 @@ pc::event_2(club & ft_club, const uts & ts, const std::string & name, std::size_
 {
   client ft_client = {
     name,
-    {std::nullopt, std::nullopt}
+    {ts, std::nullopt}
   };
 
   try
@@ -66,23 +66,15 @@ pc::event_3(club & ft_club, const uts & ts, const std::string & name, std::size_
     name,
     {std::nullopt, std::nullopt}
   };
-  /*
-  try
+
+  if (ft_club.is_free_table())
   {
-    if (ft_club.are_free_tables())
-    {
-      return std::make_pair("ICanWaitNoLonger", 13);
-    }
-    if (ft_club.waiting_queue_size() > ft_club.table_amount())
-    {
-      return std::make_pair("", 11);
-    }
+    return std::make_pair("ICanWaitNoLonger", 13);
   }
-  catch (const std::runtime_error & error)
+  if (ft_club.client_size() > ft_club.table_size())
   {
-    return std::make_pair(error.what(), 13);
+    return std::make_pair(name, 11);
   }
-  */
 
   return std::make_pair(name, 0);
 }
@@ -95,13 +87,10 @@ pc::event_4(club & ft_club, const uts & ts, const std::string & name, std::size_
     {std::nullopt, ts}
   };
 
-  /*
   try
   {
-    if (ft_club.pop_client(ft_client) != 0)
-    {
-      return std::make_pair(name, 12);
-    }
+    ft_club.pop_client(ft_client);
+    return std::make_pair(name, 12);
   }
   catch (const std::runtime_error & error)
   {
@@ -109,21 +98,37 @@ pc::event_4(club & ft_club, const uts & ts, const std::string & name, std::size_
   }
 
   return std::make_pair(name, 0);
-  */
-
-  return std::make_pair("null", 0);
 }
 
 pc::event_ret
-pc::event_11(club & ft_club, const uts & ts, const std::string & str_data, std::size_t)
+pc::event_11(club & ft_club, const uts & ts, const std::string & name, std::size_t)
 {
-  return std::make_pair("null", 0);
+  client ft_client = {
+    name,
+    {std::nullopt, ts}
+  };
+
+  try
+  {
+    ft_club.pop_client(ft_client);
+  }
+  catch (const std::runtime_error & error)
+  {
+    return std::make_pair(error.what(), 13);
+  }
+
+  return std::make_pair(name, 0);
 }
 
 pc::event_ret
 pc::event_12(club & ft_club, const uts & ts, const std::string & str_data, std::size_t)
 {
-  return std::make_pair("null", 0);
+  auto ret = ft_club.satisfy_queue();
+  if (ret.has_value())
+  {
+    return std::make_pair(ret.value(), 0);
+  }
+  return std::make_pair("client queue not changed", 0);
 }
 
 pc::event_ret

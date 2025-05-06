@@ -6,6 +6,11 @@
 #include <sstream>
 #include <iomanip>
 
+pc::time_stamp::time_stamp(std::chrono::minutes rhs):
+  hours(std::chrono::duration_cast< std::chrono::hours >(rhs)),
+  minutes(rhs - hours)
+{}
+
 std::chrono::minutes
 pc::time_stamp::to_minutes() const
 {

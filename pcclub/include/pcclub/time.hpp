@@ -13,6 +13,8 @@ namespace pc
     std::chrono::hours hours;
     std::chrono::minutes minutes;
 
+    time_stamp() = default;
+    time_stamp(std::chrono::minutes rhs);
     std::chrono::minutes to_minutes() const;
 
     bool operator==(const time_stamp & rhs) const;
